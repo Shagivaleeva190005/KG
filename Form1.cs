@@ -79,7 +79,7 @@ namespace Проект// название проекта
 
         void ReadFile()//читаем из файла
         {
-            StreamReader sr = new StreamReader("C:\\Users\\Admin\\Desktop\\123.txt");//путь к файлу
+            StreamReader sr = new StreamReader(@"..\..\123.txt");//путь к файлу
             
             var str = sr.ReadLine();//объявление переменной
             while (true)//цикл,пока верно
