@@ -148,7 +148,7 @@ namespace Проект// название проекта
 
         void Narisovat()//отрисовка линий
         {
-            for(int i = 0; i< tochki.Count; i++)// цикл ?????
+            for(int i = 0; i< tochki.Count; i++)// цикл 
             {
                 tochki[i].X /= tochki[i].H;
                 tochki[i].Y /= tochki[i].H;
@@ -243,131 +243,136 @@ namespace Проект// название проекта
             pictureBox1.Invalidate(); //перерисовываем
         }
 
-        void Smestit(double x, double y, double z)// смещение
+        void Smestit(double x, double y, double z)// функция на смещение
         {
             for (int i = 0; i < tochki.Count; i++)//цикл на смещение точек
             {
-                tochki[i].X = tochki[i].X + tochki[i].H * x;//новое положение (координата) точки
-                tochki[i].Y = tochki[i].Y + tochki[i].H * y;
-                tochki[i].Z = tochki[i].Z + tochki[i].H * z;
+                tochki[i].X = tochki[i].X + tochki[i].H * x;//новые координаты смещенной точки x по x
+                tochki[i].Y = tochki[i].Y + tochki[i].H * y;//новые координаты смещенной точки x по x
+                tochki[i].Z = tochki[i].Z + tochki[i].H * z;//новые координаты смещенной точки x по x
             }
         }
 
-        void Mashtab(double x, double y, double z)// масштаб
+        void Mashtab(double x, double y, double z)// функция на масштаб
         {
             for (int i = 0; i < tochki.Count; i++)//цикл на масштабирование
             {
-                tochki[i].X = tochki[i].X * x;// задать масштаб в координатах
-                tochki[i].Y = tochki[i].Y * y;
-                tochki[i].Z = tochki[i].Z * z;
+                tochki[i].X = tochki[i].X * x;// масштабируем х на значение по х
+                tochki[i].Y = tochki[i].Y * y;// масштабируем y на значение по y
+                tochki[i].Z = tochki[i].Z * z;// масштабируем z на значение по z
             }
         }
-        void Povorotik(double x, double y, double z)//поворот на угол
+        void Povorotik(double x, double y, double z)//функция поворота на угол
         {
-            double newX, newY, newZ;//создание новых переменных
+            double newX, newY, newZ;//задаем новые переменные
             for (int i = 0; i < tochki.Count; i++)//цикл для поворота по х  
             {
                 newY = tochki[i].Y * Math.Cos(x * Math.PI / 180) - tochki[i].Z * Math.Sin(x * Math.PI / 180);
-                // координаты новой точки
+                // координаты новой точки у
                 newZ = tochki[i].Y * Math.Sin(x * Math.PI / 180) + tochki[i].Z * Math.Cos(x * Math.PI / 180);
-                tochki[i].Y = newY;//присваивание координат
-                tochki[i].Z = newZ;
+                // координаты новой точки z
+                tochki[i].Y = newY;//присваивание координат y от новой точки y
+                tochki[i].Z = newZ;//присваивание координат z от новой точки z
             }
             for(int i = 0; i < tochki.Count; i++)//цикл для поворота по у
             {
                 newX = tochki[i].X * Math.Cos(y * Math.PI / 180) + tochki[i].Z * Math.Sin(y * Math.PI / 180);
+                // координаты новой точки x
                 newZ = -tochki[i].X * Math.Sin(y * Math.PI / 180) + tochki[i].Z * Math.Cos(y * Math.PI / 180);
-                tochki[i].X = newX;
-                tochki[i].Z = newZ;
+                // координаты новой точки z
+                tochki[i].X = newX;//присваивание координат x от новой точки x
+                tochki[i].Z = newZ;//присваивание координат z от новой точки z
             }
             for(int i = 0; i < tochki.Count; i++)//цикл для поворота по Z
             {
                 newY = tochki[i].X * Math.Sin(z * Math.PI / 180) + tochki[i].Y * Math.Cos(z * Math.PI / 180);
+                // координаты новой точки у
                 newX = tochki[i].X * Math.Cos(z * Math.PI / 180) - tochki[i].Y * Math.Sin(z * Math.PI / 180);
-                tochki[i].Y = newY;
-                tochki[i].X = newX;
+                // координаты новой точки x
+                tochki[i].Y = newY;//присваивание координат y от новой точки y
+                tochki[i].X = newX;//присваивание координат x от новой точки x
             }
         }
 
-        void Sdvig(double xy, double xz, double yz, double yx,double zx,double zy)// сдвиг
+        void Sdvig(double xy, double xz, double yz, double yx,double zx,double zy)// сдвиг оси по оси
         {
-            for (int i = 0; i < tochki.Count; i++) 
+            for (int i = 0; i < tochki.Count; i++) //цикл
             {
-                tochki[i].X = tochki[i].X + tochki[i].Y * xy;// координаты точки при сдвиге на ось                         
+                tochki[i].X = tochki[i].X + tochki[i].Y * xy;// координаты точки x при сдвиге на ось xy                         
             }
-            for (int i = 0; i < tochki.Count; i++)
+            for (int i = 0; i < tochki.Count; i++)//цикл
             {
-                tochki[i].X = tochki[i].X + tochki[i].Z * xz;
+                tochki[i].X = tochki[i].X + tochki[i].Z * xz;// координаты точки x при сдвиге на ось xz
             }
-            for (int i = 0; i < tochki.Count; i++)
+            for (int i = 0; i < tochki.Count; i++)//цикл
             {
-                tochki[i].Y = tochki[i].Y + tochki[i].X * yx;
+                tochki[i].Y = tochki[i].Y + tochki[i].X * yx;// координаты точки y при сдвиге на ось yz
             }
-            for (int i = 0; i < tochki.Count; i++)
+            for (int i = 0; i < tochki.Count; i++)//цикл
             {
-                tochki[i].Y = tochki[i].Y + tochki[i].Z * yz;
+                tochki[i].Y = tochki[i].Y + tochki[i].Z * yz;// координаты точки y при сдвиге на ось yz
             }
-            for (int i = 0; i < tochki.Count; i++)
+            for (int i = 0; i < tochki.Count; i++)//цикл
             {
-                tochki[i].Z = tochki[i].Z + tochki[i].X * zx;
+                tochki[i].Z = tochki[i].Z + tochki[i].X * zx;// координаты точки z при сдвиге на ось zx
             }
-            for (int i = 0; i < tochki.Count; i++)
+            for (int i = 0; i < tochki.Count; i++)//цикл
             {
-                tochki[i].X = tochki[i].Z + tochki[i].Y * zy;
+                tochki[i].X = tochki[i].Z + tochki[i].Y * zy;// координаты точки x при сдвиге на ось zy
             }
         }
-        void OPP(double x, double y, double z)//фокусное расстояние
+        void OPP(double x, double y, double z)//определение фокусного расстояния
         {
-            for (int i = 0; i < tochki.Count; i++)
+            for (int i = 0; i < tochki.Count; i++)//цикл 
             {
-                tochki[i].H += tochki[i].X / x;//значение точки с фокусом
-                tochki[i].H += tochki[i].Y / y;
-                tochki[i].H += tochki[i].Z / z;
+                tochki[i].H += tochki[i].X / x;//значение точки x в фокусе
+                tochki[i].H += tochki[i].Y / y;//значение точки y в фокусе
+                tochki[i].H += tochki[i].Z / z;//значение точки z в фокусе
             }
         }
-        public Form1()// рисование в окне
+        public Form1()// пикчер бокс
         {
             InitializeComponent();
-            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height); //выделение памяти
-            g = Graphics.FromImage(pictureBox1.Image);
+            pictureBox1.Image = new Bitmap(pictureBox1.Width, pictureBox1.Height); // выделяется память на ширину и высоту пикчербокса
+            g = Graphics.FromImage(pictureBox1.Image);//поверхность рисования
             
             ReadFile();// прочитать файл
 
             Vpisat();//вписать
 
-            Narisovat();//нарисовать
+            Narisovat();//перерисовать сцену
         }
 
-        private void buttonSmestit_Click(object sender, EventArgs e)// кнопка смещения
+        private void buttonSmestit_Click(object sender, EventArgs e)// при нажатии на кнопку
         {
-            Smestit(Double.Parse(textBoxx.Text), 
-                Double.Parse(textBoxy.Text), 
-                Double.Parse(textBoxz.Text));
-            Narisovat();// перерисовать
+            Smestit(Double.Parse(textBoxx.Text), // изображение смещается по x на значение текстбокса
+                Double.Parse(textBoxy.Text), // изображение смещается по y на значение текстбокса
+                Double.Parse(textBoxz.Text));// изображение смещается по z на значение текстбокса
+            Narisovat();// перерисовать сцену
         }
 
-        private void button1_Click(object sender, EventArgs e)// кнопка масштаба
+        private void button1_Click(object sender, EventArgs e)// при  нажатии на кнопку 
         {
-           Mashtab (Double.Parse(textBoxmashx.Text),
-                Double.Parse(textBoxmashy.Text),
-                Double.Parse(textBoxmashz.Text));
-            Narisovat();// перерисовать
+           Mashtab (Double.Parse(textBoxmashx.Text), //масштаб меняется по x на значение текстбокса
+                Double.Parse(textBoxmashy.Text),//масштаб меняется по y на значение текстбокса
+                Double.Parse(textBoxmashz.Text));//масштаб меняется по z на значение текстбокса
+            Narisovat();// перерисовать сцену
         }
 
-        private void buttonpovorotik_Click(object sender, EventArgs e)// кнопка поворота на угол
+        private void buttonpovorotik_Click(object sender, EventArgs e)//при нажатии на кнопку повернуть на угол
         {
-            Povorotik(Double.Parse(textBoxyx.Text),
-                   Double.Parse(textBoxyy.Text),
-                   Double.Parse(textBoxyz.Text));
-            Narisovat(); //перерисовать      
+            Povorotik(Double.Parse(textBoxyx.Text),//значение по x берется из текстбокса
+                   Double.Parse(textBoxyy.Text),//значение по y берется из текстбокса
+                   Double.Parse(textBoxyz.Text));//значение по z берется из текстбокса
+            Narisovat(); //перерисовать сцену    
 
         }
 
-        private void buttonvp_Click(object sender, EventArgs e)// кнопка вписывающая изображение в окно
+        private void buttonvp_Click(object sender, EventArgs e)// при нажатии на кнопку 
         {
-            Vpisat();//
+            Vpisat();// вписать изображение в пикчербокс
 
-            Narisovat();//
+            Narisovat();// перерисовать сцену
 
         }
 
@@ -375,22 +380,22 @@ namespace Проект// название проекта
         private void buttonsdvig_Click(object sender, EventArgs e)
         {
             // произвести сдвиг
-            Sdvig(Double.Parse(textBoxsxy.Text),
-                   Double.Parse(textBoxsxz.Text),
-                   Double.Parse(textBoxsyx.Text),
-                   Double.Parse(textBoxsyz.Text),
-                   Double.Parse(textBoxszx.Text),
-                   Double.Parse(textBoxszy.Text));
+            Sdvig(Double.Parse(textBoxsxy.Text),//сдвигается x по y на значение из текстбокса
+                   Double.Parse(textBoxsxz.Text),//сдвигается x по z на значение из текстбокса
+                   Double.Parse(textBoxsyx.Text),//сдвигается y по x на значение из текстбокса
+                   Double.Parse(textBoxsyz.Text),//сдвигается y по z на значение из текстбокса
+                   Double.Parse(textBoxszx.Text),//сдвигается z по x на значение из текстбокса
+                   Double.Parse(textBoxszy.Text));//сдвигается z по y на значение из текстбокса
             Narisovat(); // перерисовать сцену        
 
         }
 
-        private void buttonopp_Click(object sender, EventArgs e)// кнопка фокуса
+        private void buttonopp_Click(object sender, EventArgs e)// при нажатии на кнопку фокуса
         {
-            OPP(Double.Parse(textBoxoppx.Text),
-                   Double.Parse(textBoxoppy.Text),
-                   Double.Parse(textBoxoppz.Text));
-            Narisovat();//перерисовать
+            OPP(Double.Parse(textBoxoppx.Text), //значение по х берется из текстбокса
+                   Double.Parse(textBoxoppy.Text),//значение по у берется из текстбокса
+                   Double.Parse(textBoxoppz.Text));//значение по z берется из текстбокса
+            Narisovat();//перерисовать сцену
         }
     }
 }
