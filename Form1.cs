@@ -12,20 +12,22 @@ using System.Windows.Forms;
 namespace Проект// название проекта
 {
     public partial class Form1 : Form
-    {// класс точек
+    {
+        // класс точек
         class Point
-        {//объявили абциссу, ординату и аппликату точки
+        {
+            //объявили абциссу, ординату и аппликату точки
             public double X;
             public double Y;
             public double Z;
             public double H;
 
-            static public Point Parse(string str) //из класса точек создаем строки
+            static public Point Parse(string str) //создание класса Point из строки трех чисел
             {
                 Point point = new Point();// создаем точку
 
                 string[] st = str.Split(' ');// массив строк из координат
-                //элементы строки преобразуем в число и присваиваем к координатам
+                //элементы массива преобразуем в число и присваиваем к координатам
                 point.X = Double.Parse(st[0]);
                 point.Y = Double.Parse(st[1]);
                 point.Z = Double.Parse(st[2]);
@@ -36,11 +38,13 @@ namespace Проект// название проекта
         }
         // класс линий
         class Line
-        {//объявляем точки начала и конца
+        {
+            //номер точки начала
             public int begin;
+            //номер точки конца
             public int end;
 
-            static public Line Parse(string str)//из класса линий создаем строки
+            static public Line Parse(string str)//создание класса Line из строки 
             {
                 Line line = new Line();//создаем объект класса линий
 
@@ -54,11 +58,12 @@ namespace Проект// название проекта
         }
         //объявляем класс плоскость
         class ploskost
-        { //объявляем плоскости
+        { 
+            //номера точек
             public int A;
             public int B;
             public int C;
-            static public ploskost Parse(string str)// из класса плоскости создаем строки
+            static public ploskost Parse(string str)//создание класса ploskost из строки 
             {
                 ploskost line = new ploskost();//создаем объект класса плоскость
 
@@ -82,7 +87,7 @@ namespace Проект// название проекта
         {
             StreamReader sr = new StreamReader(@"..\..\123.txt");//путь к файлу
             
-            var str = sr.ReadLine();//проситанная из файла первая строка превращается в переменную str
+            var str = sr.ReadLine();//читаем строку
             while (true)//цикл,пока верно
             {
 
@@ -109,8 +114,8 @@ namespace Проект// название проекта
                 str = sr.ReadLine();// прочитать следующую строчку из файла
             }
         }
-
-        void Vpisat() //функция вписать
+        //функция вписать
+        void Vpisat()
         {
             double maxX = tochki[0].X;//присваивание макс значения координат первой точки
             double minX = tochki[0].X;//присваивание мин значения координат первой точки
@@ -136,10 +141,12 @@ namespace Проект// название проекта
 
             for (int i = 0; i < tochki.Count; i++)//перебираем точки
             {
-                tochki[i].X -= minX;// смещаем точку
+                // смещаем точку
+                tochki[i].X -= minX;
                 tochki[i].Y -= minY;
-
-                tochki[i].X *= k;// масштабируем
+                
+                // масштабируем
+                tochki[i].X *= k;
                 tochki[i].Y *= k;
                 tochki[i].Z *= k;
             }
@@ -284,8 +291,9 @@ namespace Проект// название проекта
                 tochki[i].X = newX;//присваивание координат x от новой точки x
                 tochki[i].Z = newZ;//присваивание координат z от новой точки z
             }
+            //поворот по оZ
             for(int i = 0; i < tochki.Count; i++)//перебираем точки
-                //поворот по оZ
+                
             {
                 newY = tochki[i].X * Math.Sin(z * Math.PI / 180) + tochki[i].Y * Math.Cos(z * Math.PI / 180);
                 // координаты новой точки у
