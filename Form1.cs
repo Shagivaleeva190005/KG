@@ -22,7 +22,7 @@ namespace Проект// название проекта
             public double Z;
             public double H;
 
-            static public Point Parse(string str) //создание класса Point из строки трех чисел
+            static public Point Parse(string str) //объект класса Point 
             {
                 Point point = new Point();// создаем точку
 
@@ -36,26 +36,25 @@ namespace Проект// название проекта
                 return point;//возвращаем созданную точку
             }
         }
+
         // класс линий
         class Line
-        {
-            //номер точки начала
-            public int begin;
-            //номер точки конца
-            public int end;
-
+        {            
+            public int begin;//номер точки начала
+            public int end;//номер точки конца
             static public Line Parse(string str)//создание класса Line из строки 
             {
                 Line line = new Line();//создаем объект класса линий
 
                 string[] st = str.Split(' ');// массив строк из точек начала и конца
-               //элементы строки преобразуем в число и присваиваем к номерам точек начала и конца
+                //элементы строки массива преобразуем в число и присваиваем к номерам точек начала и конца
                 line.begin = int.Parse(st[0]);
                 line.end = int.Parse(st[1]);
 
                 return line;//возвращаем созданную линию
             }
         }
+
         //объявляем класс плоскость
         class ploskost
         { 
@@ -83,14 +82,14 @@ namespace Проект// название проекта
 
         Graphics g;// нарисовать
 
-        void ReadFile()//читаем из файла
+        //читаем из файла
+        void ReadFile()
         {
             StreamReader sr = new StreamReader(@"..\..\123.txt");//путь к файлу
             
             var str = sr.ReadLine();//читаем строку
             while (true)//цикл,пока верно
             {
-
                 if (sr.EndOfStream) break;// если конец файла, прервать цикл
                 if (str == "*") break;//если *, прервать цикл
                 tochki.Add(Point.Parse(str));//переменную str в точку и добавить в лист
@@ -99,7 +98,6 @@ namespace Проект// название проекта
             str = sr.ReadLine();// прочитать следующую строчку из файла
             while (true)//цикл, пока верно
             {
-
                 if (sr.EndOfStream) break;// если конец файла, прервать цикл
                 if (str == "*") break;//если *, прервать цикл
                 otrzki.Add(Line.Parse(str));//переменную str в точки начала и конца и добавить в лист
@@ -108,12 +106,12 @@ namespace Проект// название проекта
             str = sr.ReadLine();// прочитать следующую строчку из файла
             while (true)//цикл, пока верно
             {
-
                 plosko.Add(ploskost.Parse(str));//переменную str в номера точек и добавить в лист
                 if (sr.EndOfStream) break;// если конец файла, прервать цикл
                 str = sr.ReadLine();// прочитать следующую строчку из файла
             }
         }
+
         //функция вписать
         void Vpisat()
         {
@@ -134,7 +132,6 @@ namespace Проект// название проекта
             double k;//коэффициент масштабирования
             //находим минимальное значенние отношения размеров сцены и пикчербокса, присваиваем это значение коэфф масшт
             if (pictureBox1.Height / (maxY - minY) > pictureBox1.Width / (maxX - minX))
-                
                 k = pictureBox1.Width / (maxX - minX); 
             else k = pictureBox1.Height / (maxY - minY);// иначе берем результат отношения высоты
 
@@ -152,8 +149,9 @@ namespace Проект// название проекта
             }
         }
 
-        void Narisovat()//отрисовка линий
-        {
+        //отрисовка линий
+        void Narisovat()
+        {   //перевод из однородных в декартовые
             for(int i = 0; i< tochki.Count; i++)//перебираем точек  
             {
                 tochki[i].X /= tochki[i].H;
@@ -166,7 +164,7 @@ namespace Проект// название проекта
             if(radioButtonk.Checked) //если выбран каркас
             {
                 for (int i = 0; i < otrzki.Count; i++)//для каждого отрезка
-                {//нарисовать соответствующую отрезку черную линию
+                {   //нарисовать соответствующую отрезку черную линию
                     g.DrawLine(new Pen(Color.Black, 2),
                         (float)tochki[otrzki[i].begin - 1].X, (float)tochki[otrzki[i].begin - 1].Y,
                         (float)tochki[otrzki[i].end - 1].X, (float)tochki[otrzki[i].end - 1].Y);
@@ -175,7 +173,7 @@ namespace Проект// название проекта
             if (radioButtonR.Checked)//если выбран алгоритм Робертса
             {
                 for (int i = 0; i < plosko.Count; i++)//перебор плоскостей
-                {//проекция границ плоскости на оси
+                {   //проекция границ плоскости на оси
                     double ABx = tochki[plosko[i].B - 1].X - tochki[plosko[i].A - 1].X;
                     double ABy = tochki[plosko[i].B - 1].Y - tochki[plosko[i].A - 1].Y;
                     double ABz = tochki[plosko[i].B - 1].Z - tochki[plosko[i].A - 1].Z;
@@ -191,7 +189,7 @@ namespace Проект// название проекта
                     double Sp = 0; //скалярное произведение равно 0
 
                     for (int j = 0; j < tochki.Count; j++)//цперебираем все точки
-                    {//проекция отрезка от точки плоскости до текущей точки
+                    {   //проекция отрезка от точки плоскости до текущей точки
                         double tx = tochki[j].X - tochki[plosko[i].A - 1].X; 
                         double ty = tochki[j].Y - tochki[plosko[i].A - 1].Y;
                         double tz = tochki[j].Z - tochki[plosko[i].A - 1].Z;
@@ -202,7 +200,7 @@ namespace Проект// название проекта
                     }
                     //если нашлась точка, которая лежит со стороны нормали
                     if (Sp>0)
-                    {//сменить направление нормали на противоположное
+                    {   //сменить направление нормали на противоположное
                         Nx *= -1; 
                         Ny = -Ny;
                         Nz = -Nz;
@@ -249,7 +247,8 @@ namespace Проект// название проекта
             pictureBox1.Invalidate(); //перерисовываем
         }
 
-        void Smestit(double x, double y, double z)// функция на смещение
+        // функция на смещение
+        void Smestit(double x, double y, double z)
         {
             for (int i = 0; i < tochki.Count; i++)//перебираем точек
             {
@@ -259,7 +258,8 @@ namespace Проект// название проекта
             }
         }
 
-        void Mashtab(double x, double y, double z)// функция на масштаб
+        // функция на масштаб
+        void Mashtab(double x, double y, double z)
         {
             for (int i = 0; i < tochki.Count; i++)//перебираем точки
             {
@@ -268,7 +268,9 @@ namespace Проект// название проекта
                 tochki[i].Z = tochki[i].Z * z;// масштабируем z на значение по z
             }
         }
-        void Povorotik(double x, double y, double z)//функция поворота на угол
+
+        //функция поворота на угол
+        void Povorotik(double x, double y, double z)
         {
             double newX, newY, newZ;//объявляем новые переменные
             //поворот по ох
@@ -304,34 +306,42 @@ namespace Проект// название проекта
             }
         }
 
-        void Sdvig(double xy, double xz, double yz, double yx,double zx,double zy)// параллельный перенос
-        {
+        // параллельный перенос
+        void Sdvig(double xy, double xz, double yz, double yx,double zx,double zy)
+        {   //х по у
             for (int i = 0; i < tochki.Count; i++) //перебор точек
             {
-                tochki[i].X = tochki[i].X + tochki[i].Y * xy;// координаты точки x при переносе на ось xy                         
+                tochki[i].X = tochki[i].X + tochki[i].Y * xy;                         
             }
+            //х по z
             for (int i = 0; i < tochki.Count; i++)
             {
-                tochki[i].X = tochki[i].X + tochki[i].Z * xz;// координаты точки x при переносе на ось xz
+                tochki[i].X = tochki[i].X + tochki[i].Z * xz;
             }
+            //у по х
             for (int i = 0; i < tochki.Count; i++)
             {
-                tochki[i].Y = tochki[i].Y + tochki[i].X * yx;// координаты точки y при переносе на ось yz
+                tochki[i].Y = tochki[i].Y + tochki[i].X * yx;
             }
+            //у по z
             for (int i = 0; i < tochki.Count; i++)
             {
-                tochki[i].Y = tochki[i].Y + tochki[i].Z * yz;// координаты точки y при переносе на ось yz
+                tochki[i].Y = tochki[i].Y + tochki[i].Z * yz;
             }
+            //z по х
             for (int i = 0; i < tochki.Count; i++)
             {
-                tochki[i].Z = tochki[i].Z + tochki[i].X * zx;// координаты точки z при переносе на ось zx
+                tochki[i].Z = tochki[i].Z + tochki[i].X * zx;
             }
+            //z по у
             for (int i = 0; i < tochki.Count; i++)
             {
-                tochki[i].X = tochki[i].Z + tochki[i].Y * zy;// координаты точки x при переносе на ось zy
+                tochki[i].X = tochki[i].Z + tochki[i].Y * zy;
             }
         }
-        void OPP(double x, double y, double z)//одноточечное проективное преобразование
+
+        //одноточечное проективное преобразование
+        void OPP(double x, double y, double z)
         {
             for (int i = 0; i < tochki.Count; i++)//перебор точек
             { //три опп по трем осям
@@ -340,6 +350,8 @@ namespace Проект// название проекта
                 tochki[i].H += tochki[i].Z / z;
             }
         }
+
+        //создание изображения в пикчербокс
         public Form1()
         {
             InitializeComponent();
@@ -353,15 +365,17 @@ namespace Проект// название проекта
             Narisovat();//нарисовать сцену
         }
 
-        private void buttonSmestit_Click(object sender, EventArgs e)// при нажатии на кнопку происходит сдвиг
-        { //преобразовываем строку в число и смещаем на это значение
+        // при нажатии на кнопку...
+        private void buttonSmestit_Click(object sender, EventArgs e)
+        {   //преобразовываем строку в число и смещаем на это значение
             Smestit(Double.Parse(textBoxx.Text), 
                 Double.Parse(textBoxy.Text), 
                 Double.Parse(textBoxz.Text));
             Narisovat();// перерисовать сцену
         }
 
-        private void button1_Click(object sender, EventArgs e)//при нажатии на кнопку масштабируется
+        //при нажатии на кнопку...
+        private void button1_Click(object sender, EventArgs e)
         {
             //преобразовываем строку в число и масштабируем на это число
             Mashtab(Double.Parse(textBoxmashx.Text), 
@@ -370,8 +384,9 @@ namespace Проект// название проекта
             Narisovat();// перерисовать сцену
         }
 
-        private void buttonpovorotik_Click(object sender, EventArgs e)//рпи нажатии на кнопку поворачивается на угол
-        {////преобразовываем строку в число и поворачиваем на это значение угла
+        //рпи нажатии на кнопку...
+        private void buttonpovorotik_Click(object sender, EventArgs e)
+        {//преобразовываем строку в число и поворачиваем на это значение угла
             Povorotik(Double.Parse(textBoxyx.Text),
                    Double.Parse(textBoxyy.Text),
                    Double.Parse(textBoxyz.Text));
@@ -379,7 +394,8 @@ namespace Проект// название проекта
 
         }
 
-        private void buttonvp_Click(object sender, EventArgs e)// при нажатии на кнопку вписывается изображение
+        // при нажатии на кнопку...
+        private void buttonvp_Click(object sender, EventArgs e)
         {
             Vpisat();// вписать изображение в пикчербокс
 
@@ -387,7 +403,7 @@ namespace Проект// название проекта
 
         }
 
-        // при нажатии на кнопку ...
+        // при нажатии на кнопку...
         private void buttonsdvig_Click(object sender, EventArgs e)
         {
             // произвести сдвиг
@@ -401,7 +417,8 @@ namespace Проект// название проекта
 
         }
 
-        private void buttonopp_Click(object sender, EventArgs e)// при нажатии на кнопку опп
+        // при нажатии на кнопку...    
+        private void buttonopp_Click(object sender, EventArgs e)
         {
             OPP(Double.Parse(textBoxoppx.Text), //значение по х берется из текстбокса
                    Double.Parse(textBoxoppy.Text),//значение по у берется из текстбокса
