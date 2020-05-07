@@ -232,7 +232,7 @@ namespace Проект// название проекта
                         {
                             if ((plosko[i].A == otrzki[k].begin & plosko[i].B == otrzki[k].end) ||
                                 (plosko[i].A == otrzki[k].end & plosko[i].B == otrzki[k].begin))
-                                //если плоскоть А это начало отрезка и В его конец, или наоборот
+                                //если точка А это начало отрезка и В его конец, или наоборот
                             {
                                 g.DrawLine(new Pen(Color.Black, 2),//цвет линий черный
                                       (float)tochki[otrzki[k].begin - 1].X, (float)tochki[otrzki[k].begin - 1].Y,
@@ -242,7 +242,7 @@ namespace Проект// название проекта
 
                             if ((plosko[i].A == otrzki[k].begin & plosko[i].C == otrzki[k].end) ||
                                 (plosko[i].A == otrzki[k].end & plosko[i].C == otrzki[k].begin))
-                            //если плоскоть А это начало отрезка и С его конец, или наоборот
+                                //если точка А это начало отрезка и С его конец, или наоборот
                             {
                                 g.DrawLine(new Pen(Color.Black, 2),//цвет линий черный
                                       (float)tochki[otrzki[k].begin - 1].X, (float)tochki[otrzki[k].begin - 1].Y,
@@ -251,7 +251,7 @@ namespace Проект// название проекта
 
                             if ((plosko[i].C == otrzki[k].begin & plosko[i].B == otrzki[k].end) ||
                                 (plosko[i].C == otrzki[k].end & plosko[i].B == otrzki[k].begin))
-                            //если плоскоть С это начало отрезка и В его конец, или наоборот
+                                //если точка С это начало отрезка и В его конец, или наоборот
                             {
                                 g.DrawLine(new Pen(Color.Black, 2),//цвет линий черный
                                       (float)tochki[otrzki[k].begin - 1].X, (float)tochki[otrzki[k].begin - 1].Y,
@@ -259,7 +259,6 @@ namespace Проект// название проекта
                             }
                         }
                     }
-
                 }
             }
 
@@ -356,6 +355,7 @@ namespace Проект// название проекта
             {
                 tochki[i].Y = tochki[i].Y + tochki[i].Z * yz;
             }
+
             //z по х
             for (int i = 0; i < tochki.Count; i++)
             {
@@ -395,43 +395,47 @@ namespace Проект// название проекта
             Narisovat();//нарисовать сцену
         }
 
-        // при нажатии на кнопку преобразовываем строку в число и смещаем на это значение
+        // при нажатии на кнопку смещения
         private void buttonSmestit_Click(object sender, EventArgs e)
         {  
+            //преобразовываем строку в число и смещаем на это значение
             Smestit(Double.Parse(textBoxx.Text), 
                 Double.Parse(textBoxy.Text), 
                 Double.Parse(textBoxz.Text));
             Narisovat();// перерисовать сцену
         }
 
-        //при нажатии на кнопку преобразовываем строку в число и масштабируем на это число
+        //при нажатии на кнопку масштаба
         private void button1_Click(object sender, EventArgs e)
-        {            
+        { 
+            // преобразовываем строку в число и масштабируем на это число         
             Mashtab(Double.Parse(textBoxmashx.Text), 
                 Double.Parse(textBoxmashy.Text),
                 Double.Parse(textBoxmashz.Text));
             Narisovat();// перерисовать сцену
         }
 
-        //рпи нажатии на кнопку преобразовываем строку в число и поворачиваем на это значение угла
+        //рпи нажатии на кнопку воворота на угол
         private void buttonpovorotik_Click(object sender, EventArgs e)
         {
+            //преобразовываем строку в число и поворачиваем на это значение угла
             Povorotik(Double.Parse(textBoxyx.Text),
                    Double.Parse(textBoxyy.Text),
                    Double.Parse(textBoxyz.Text));
             Narisovat(); //перерисовать сцену 
         }
 
-        // при нажатии на кнопку вписать изображение в пикчербокс
+        // при нажатии на кнопку вписать 
         private void buttonvp_Click(object sender, EventArgs e)
         {
-            Vpisat();
+            Vpisat(); //вписать изображение в пикчербокс
             Narisovat();// перерисовать сцену
         }
 
-        // при нажатии на кнопку произвести сдвиг
+        // при нажатии на кнопку сдвига
         private void buttonsdvig_Click(object sender, EventArgs e)
-        {            
+        {      
+            //произвести сдвиг      
             Sdvig(Double.Parse(textBoxsxy.Text),
                    Double.Parse(textBoxsxz.Text),
                    Double.Parse(textBoxsyx.Text),
@@ -441,9 +445,10 @@ namespace Проект// название проекта
             Narisovat(); // перерисовать сцену        
         }
 
-        // при нажатии на кнопку производится одноточечное проективное преобразование    
+        // при нажатии на кнопку ОПП
         private void buttonopp_Click(object sender, EventArgs e)
         {
+            //производится одноточечное проективное преобразование    
             OPP(Double.Parse(textBoxoppx.Text), //значение по х берется из текстбокса
                    Double.Parse(textBoxoppy.Text),//значение по у берется из текстбокса
                    Double.Parse(textBoxoppz.Text));//значение по z берется из текстбокса
